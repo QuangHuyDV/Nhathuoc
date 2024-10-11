@@ -10,10 +10,10 @@ namespace Nhathuoc.Data
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var db = serviceProvider.GetRequiredService<PharmacyContext>())
+            using (var context = serviceProvider.GetRequiredService<PharmacyContext>())
             {
-                db.Database.EnsureCreated();
-                if (db.Categories.Any())
+                context.Database.EnsureCreated();
+                if (context.Categories.Any())
                 {
                     return;
                 }
@@ -31,51 +31,43 @@ namespace Nhathuoc.Data
                 };
                 foreach (var category in categories)
                 {
-                    db.Categories.Add(category);
+                    context.Categories.Add(category);
                 }
-                db.SaveChanges();
+                context.SaveChanges();
 
-                if (db.Products.Any())
-                {
-                    return;
-                }
                 var products = new Product[] {
-                    new Product { Name = "Amoxicillin", CategoryId = 1 , Price = 8000, Unit = "viên", QuantityInStock = 1000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Mannufacurer = "Công ty Dược phẩm A", Created = unixTimestamp},
-                    new Product { Name = "Metformin", CategoryId = 1 , Price = 5000, Unit = "viên", QuantityInStock = 5000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Mannufacurer = "Công ty Dược phẩm b", Created = unixTimestamp},
-                    new Product { Name = "Lisinopril", CategoryId = 1 , Price = 3500, Unit = "viên", QuantityInStock = 4000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Mannufacurer = "Công ty Dược phẩm A", Created = unixTimestamp},
-                    new Product { Name = "Paracetamol", CategoryId = 2 , Price = 2000, Unit = "viên", QuantityInStock = 2000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Mannufacurer = "Công ty Dược phẩm A", Created = unixTimestamp},
-                    new Product { Name = "Ibuprofen", CategoryId = 2 , Price = 2500, Unit = "viên", QuantityInStock = 1500, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Mannufacurer = "Công ty Dược phẩm C", Created = unixTimestamp},
-                    new Product { Name = "Vitamin C", CategoryId = 3 , Price = 900, Unit = "viên", QuantityInStock = 5000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Mannufacurer = "Công ty Dược phẩm D", Created = unixTimestamp},
-                    new Product { Name = "Omega-3", CategoryId = 3 , Price = 2500, Unit = "viên", QuantityInStock = 2000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Mannufacurer = "Công ty Dược phẩm D", Created = unixTimestamp},
-                    new Product { Name = "Bông băng", CategoryId = 4 , Price = 10000, Unit = "100gam", QuantityInStock = 1000, ExpiryDate = "3 đến 5 năm", Mannufacurer = "Công ty Dược phẩm E", Created = unixTimestamp},
-                    new Product { Name = "Gạc", CategoryId = 4 , Price = 15000, Unit = "10 cái", QuantityInStock = 10000, ExpiryDate = "3 đến 5 năm", Mannufacurer = "Công ty Dược phẩm E", Created = unixTimestamp},
-                    new Product { Name = "Kem dưỡng ẩm", CategoryId = 5 , Price = 120000, Unit = "50ml", QuantityInStock = 1500, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Mannufacurer = "Công ty Dược phẩm A", Created = unixTimestamp},
-                    new Product { Name = "Gel trị mụn", CategoryId = 5 , Price = 80000, Unit = "20g", QuantityInStock = 1000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Mannufacurer = "Công ty Dược phẩm H", Created = unixTimestamp},
-                    new Product { Name = "Siro giảm ho", CategoryId = 6 , Price = 60000, Unit = "100ml", QuantityInStock = 1000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Mannufacurer = "Công ty Dược phẩm A", Created = unixTimestamp},
-                    new Product { Name = "Dầu gió cho trẻ em", CategoryId = 6 , Price = 35000, Unit = "50ml", QuantityInStock = 1000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Mannufacurer = "Công ty Dược phẩm A", Created = unixTimestamp},
-                    new Product { Name = "Vitamin tổng hợp cho trẻ em", CategoryId = 6 , Price = 4000, Unit = "viên", QuantityInStock = 1000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Mannufacurer = "Công ty Dược phẩm A", Created = unixTimestamp},
-                    new Product { Name = "Vitamin B9 (Folic Acid)", CategoryId = 1 , Price = 8000, Unit = "viên", QuantityInStock = 1000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Mannufacurer = "Công ty Dược phẩm A", Created = unixTimestamp},
-                    new Product { Name = "Kem trị rạn da", CategoryId = 1 , Price = 150000, Unit = "100ml", QuantityInStock = 1000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Mannufacurer = "Công ty Dược phẩm A", Created = unixTimestamp},
+                    new Product { Name = "Amoxicillin", CategoryId = 1 , Price = 8000, Unit = "viên", QuantityInStock = 1000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Manufacturer = "Công ty Dược phẩm A", Created = unixTimestamp},
+                    new Product { Name = "Metformin", CategoryId = 1 , Price = 5000, Unit = "viên", QuantityInStock = 5000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Manufacturer = "Công ty Dược phẩm b", Created = unixTimestamp},
+                    new Product { Name = "Lisinopril", CategoryId = 1 , Price = 3500, Unit = "viên", QuantityInStock = 4000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Manufacturer = "Công ty Dược phẩm A", Created = unixTimestamp},
+                    new Product { Name = "Paracetamol", CategoryId = 2 , Price = 2000, Unit = "viên", QuantityInStock = 2000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Manufacturer = "Công ty Dược phẩm A", Created = unixTimestamp},
+                    new Product { Name = "Ibuprofen", CategoryId = 2 , Price = 2500, Unit = "viên", QuantityInStock = 1500, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Manufacturer = "Công ty Dược phẩm C", Created = unixTimestamp},
+                    new Product { Name = "Vitamin C", CategoryId = 3 , Price = 900, Unit = "viên", QuantityInStock = 5000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Manufacturer = "Công ty Dược phẩm D", Created = unixTimestamp},
+                    new Product { Name = "Omega-3", CategoryId = 3 , Price = 2500, Unit = "viên", QuantityInStock = 2000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Manufacturer = "Công ty Dược phẩm D", Created = unixTimestamp},
+                    new Product { Name = "Bông băng", CategoryId = 4 , Price = 10000, Unit = "100gam", QuantityInStock = 1000, ExpiryDate = "3 đến 5 năm", Manufacturer = "Công ty Dược phẩm E", Created = unixTimestamp},
+                    new Product { Name = "Gạc", CategoryId = 4 , Price = 15000, Unit = "10 cái", QuantityInStock = 10000, ExpiryDate = "3 đến 5 năm", Manufacturer = "Công ty Dược phẩm E", Created = unixTimestamp},
+                    new Product { Name = "Kem dưỡng ẩm", CategoryId = 5 , Price = 120000, Unit = "50ml", QuantityInStock = 1500, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Manufacturer = "Công ty Dược phẩm A", Created = unixTimestamp},
+                    new Product { Name = "Gel trị mụn", CategoryId = 5 , Price = 80000, Unit = "20g", QuantityInStock = 1000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Manufacturer = "Công ty Dược phẩm H", Created = unixTimestamp},
+                    new Product { Name = "Siro giảm ho", CategoryId = 6 , Price = 60000, Unit = "100ml", QuantityInStock = 1000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Manufacturer = "Công ty Dược phẩm A", Created = unixTimestamp},
+                    new Product { Name = "Dầu gió cho trẻ em", CategoryId = 6 , Price = 35000, Unit = "50ml", QuantityInStock = 1000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Manufacturer = "Công ty Dược phẩm A", Created = unixTimestamp},
+                    new Product { Name = "Vitamin tổng hợp cho trẻ em", CategoryId = 6 , Price = 4000, Unit = "viên", QuantityInStock = 1000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Manufacturer = "Công ty Dược phẩm A", Created = unixTimestamp},
+                    new Product { Name = "Vitamin B9 (Folic Acid)", CategoryId = 1 , Price = 8000, Unit = "viên", QuantityInStock = 1000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Manufacturer = "Công ty Dược phẩm A", Created = unixTimestamp},
+                    new Product { Name = "Kem trị rạn da", CategoryId = 1 , Price = 150000, Unit = "100ml", QuantityInStock = 1000, ExpiryDate = "1 đến 3 năm kể từ ngày sản xuất", Manufacturer = "Công ty Dược phẩm A", Created = unixTimestamp},
                 };
                 foreach (var product in products)
                 {
-                    db.Products.Add(product);
+                    context.Products.Add(product);
                 }
-                db.SaveChanges();
+                context.SaveChanges();
 
-                if (db.Customers.Any())
-                {
-                    return;
-                }
                 var customers = new Customer[] {
                     new Customer { CustomerName = "Huy", CustomerPhone = "0983192540", CustomerAddress = "Duyên Hà, Thanh Trì, Hà Nội", Dob = DateTime.Parse("2001-10-20"), Created = unixTimestamp},
                     new Customer { CustomerName = "Khánh", CustomerPhone = "0983192541", CustomerAddress = "Long Biên, Hà Nội", Dob = DateTime.Parse("2002-12-02"), Created = unixTimestamp}
                 };
                 foreach (var customer in customers)
                 {
-                    db.Customers.Add(customer);
+                    context.Customers.Add(customer);
                 }
-                db.SaveChanges();
+                context.SaveChanges();
 
                 var suppliers = new Supplier[] {
                     new Supplier {SupplierName = "Kho 1", Address = "Long Biên, Hà Nội", Email="kho1@gmail.com", Phone="0123229992", Created = unixTimestamp},
@@ -84,25 +76,25 @@ namespace Nhathuoc.Data
                 };
                 foreach (var supplier in suppliers)
                 {
-                    db.Suppliers.Add(supplier);
+                    context.Suppliers.Add(supplier);
                 }
-                db.SaveChanges();
+                context.SaveChanges();
 
                 var stocks = new Stock[] {
-                    new Stock { ProductId = 1, SupplierId = 1, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
-                    new Stock { ProductId = 2, SupplierId = 1, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
-                    new Stock { ProductId = 3, SupplierId = 2, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
-                    new Stock { ProductId = 4, SupplierId = 3, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
-                    new Stock { ProductId = 5, SupplierId = 1, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
-                    new Stock { ProductId = 6, SupplierId = 2, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
-                    new Stock { ProductId = 1, SupplierId = 1, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-09"), Created = unixTimestamp },
-                    new Stock { ProductId = 3, SupplierId = 1, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-09"), Created = unixTimestamp },
+                    new Stock { Name = "Nhập lần 1",ProductId = 1, SupplierId = 1, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
+                    new Stock { Name = "Nhập lần 2",ProductId = 2, SupplierId = 1, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
+                    new Stock { Name = "Nhập lần 3",ProductId = 3, SupplierId = 2, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
+                    new Stock { Name = "Nhập lần 4",ProductId = 4, SupplierId = 3, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
+                    new Stock { Name = "Nhập lần 5",ProductId = 5, SupplierId = 1, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
+                    new Stock { Name = "Nhập lần 6",ProductId = 6, SupplierId = 2, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
+                    new Stock { Name = "Nhập lần 7",ProductId = 1, SupplierId = 1, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-09"), Created = unixTimestamp },
+                    new Stock { Name = "Nhập lần 8",ProductId = 3, SupplierId = 1, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-09"), Created = unixTimestamp },
                 };
                 foreach (var stock in stocks)
                 {
-                    db.Stocks.Add(stock);
+                    context.Stocks.Add(stock);
                 }
-                db.SaveChanges();
+                context.SaveChanges();
             }
         }
     }

@@ -1,0 +1,40 @@
+@model Nhathuoc.Models.Stock
+
+@{
+    ViewData["Title"] = "Edit Stock";
+}
+
+<div class="container">
+    <h2>Edit Stock</h2>
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="StockId" />
+
+        <div class="form-group">
+            <label for="Name">Tên</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="QuantityReceived">QuantityReceived</label>
+            <input asp-for="QuantityReceived" class="form-control" />
+            <span asp-validation-for="QuantityReceived" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="ReceivedDate">Ngày nhập hàng</label>
+            <input asp-for="ReceivedDate" type="date" class="form-control" />
+            <span asp-validation-for="ReceivedDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="SupplierId">Nhà cung cấp</label>
+            <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.SupplierId"></select>
+            <span asp-validation-for="SupplierId" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

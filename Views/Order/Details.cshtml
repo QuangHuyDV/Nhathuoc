@@ -1,0 +1,42 @@
+@model Nhathuoc.Models.Order
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h1>Order Details</h1>
+
+<div>
+    <h3>Mã hoá đơn: @Model.OrderId</h3>
+    <p><strong>Khách hàng:</strong> @Model.Customer?.CustomerName</p>
+    <p><strong>Ngày đặt:</strong> @Model.OrderDate.ToString("yyyy-MM-dd")</p>
+    <p><strong>Tổng số lượng:</strong> @Model.TotalAmount</p>
+    <p><strong>Trạng thaí:</strong> @Model.Status</p>
+</div>
+
+<h3>Sản phẩm hoá đơn</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên sản phầm</th>
+            <th>Số lượng</th>
+            <th>Giá trị </th>
+            <th>Tổng giá trị</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderDetail)
+        {
+            <tr>
+                <td>@item.Product?.Name</td>
+                <td>@item.Quantity</td>
+                <td>@item.UnitPrice</td>
+                <td>@(item.Quantity * item.UnitPrice)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Index" class="btn btn-primary">Back to Orders</a>
+</div>

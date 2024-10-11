@@ -1,0 +1,38 @@
+@model IEnumerable<Nhathuoc.Models.Stock>
+
+@{
+    ViewData["Title"] = "Stock List";
+}
+
+<div class="container">
+    <h2>Stock List</h2>
+    <a asp-action="Create" class="btn btn-primary mb-2">Create New Stock</a>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Tên lần nhập kho</th>
+                <th>Tên sản phẩm</th>
+                <th>Tên nhà cung cấp</th>
+                <th>Ngày nhập</th>
+                <th>Số lượng</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Supplier.SupplierName</td>
+                    <td>@item.ReceivedDate.ToShortDateString()</td>
+                    <td>@item.QuantityReceived</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-warning">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

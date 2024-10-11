@@ -1,0 +1,75 @@
+@model Nhathuoc.Models.Order
+
+@{
+    ViewData["Title"] = "Create Order";
+}
+
+<h1>Create Order</h1>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="CustomerId" class="control-label"></label>
+        <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="OrderDate" class="control-label"></label>
+        <input asp-for="OrderDate" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TotalAmount" class="control-label"></label>
+        <input asp-for="TotalAmount" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Status" class="control-label"></label>
+        <input asp-for="Status" class="form-control" />
+    </div>
+
+    <!-- Begin Order Details Input -->
+    <h3>Order Details</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+            </tr>
+        </thead>
+        <tbody id="orderDetails">
+            <tr>
+                <td>
+                    <select name="OrderDetail[0].ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+                </td>
+                <td>
+                    <input name="OrderDetail[0].Quantity" class="form-control" />
+                </td>
+                <td>
+                    <input name="OrderDetail[0].UnitPrice" class="form-control" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-primary" onclick="addDetail()">Add Another Product</button>
+
+    <div class="form-group mt-3">
+        <input type="submit" value="Create" class="btn btn-success" />
+    </div>
+</form>
+
+@section Scripts {
+    <script type="text/javascript">
+        var detailIndex = 1;
+        function addDetail() {
+            var newRow = '<tr>' +
+                '<td><select name="OrderDetail[' + detailIndex + '].ProductId" class="form-control" asp-items="ViewBag.ProductId"></select></td>' +
+                '<td><input name="OrderDetail[' + detailIndex + '].Quantity" class="form-control" /></td>' +
+                '<td><input name="OrderDetail[' + detailIndex + '].UnitPrice" class="form-control" /></td>' +
+                '</tr>';
+            $('#orderDetails').append(newRow);
+            detailIndex++;
+        }
+    </script>
+}

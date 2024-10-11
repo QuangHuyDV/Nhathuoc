@@ -1,0 +1,44 @@
+@model Nhathuoc.Models.Stock
+
+@{
+    ViewData["Title"] = "Create Stock";
+}
+
+<div class="container">
+    <h2>Tạo nhập kho</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label for="Name">Tên nhập kho</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="ProductId">Sản phầm</label>
+            <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+            <span asp-validation-for="ProductId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="SupplierId">nhà cung cấp</label>
+            <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.SupplierId"></select>
+            <span asp-validation-for="SupplierId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="QuantityReceived">Số lượng</label>
+            <input asp-for="QuantityReceived" class="form-control" />
+            <span asp-validation-for="QuantityReceived" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="ReceivedDate">Ngày hết hạn</label>
+            <input asp-for="ReceivedDate" type="date" class="form-control" />
+            <span asp-validation-for="ReceivedDate" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Tạo</button>
+        <a asp-action="Index" class="btn btn-secondary">Huỷ</a>
+    </form>
+</div>

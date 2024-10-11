@@ -1,0 +1,38 @@
+@model IEnumerable<Nhathuoc.Models.Customer>
+
+@{
+    ViewData["Title"] = "Customer List";
+}
+
+<div class="container">
+    <h2>Customer List</h2>
+    <a asp-action="Create" class="btn btn-primary mb-2">Create New Customer</a>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Date of Birth</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CustomerName</td>
+                    <td>@item.CustomerEmail</td>
+                    <td>@item.CustomerPhone</td>
+                    <td>@item.CustomerAddress</td>
+                    <td>@item.Dob.ToShortDateString()</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.CustomerId" class="btn btn-sm btn-warning">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

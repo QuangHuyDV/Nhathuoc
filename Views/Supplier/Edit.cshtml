@@ -1,0 +1,40 @@
+@model Nhathuoc.Models.Supplier
+
+@{
+    ViewData["Title"] = "Edit Supplier";
+}
+
+<div class="container">
+    <h2>Sửa thông tin nhà cung cấp</h2>
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="SupplierId" />
+
+        <div class="form-group">
+            <label for="SupplierName">Tên khách hàng</label>
+            <input asp-for="SupplierName" class="form-control" />
+            <span asp-validation-for="SupplierName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="SupplierEmail">Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="SupplierPhone">Số điện thoại</label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="SupplierAddress">SupplierAddress</label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <a asp-action="Index" class="btn btn-secondary">Huỷ</a>
+    </form>
+</div>

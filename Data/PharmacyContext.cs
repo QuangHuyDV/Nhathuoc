@@ -9,16 +9,16 @@ namespace Nhathuoc.Data
 {
     public class PharmacyContext : DbContext
     {
-        public PharmacyContext(DbContextOptions<PharmacyContext> options) : base(options) { }
+        public PharmacyContext(DbContextOptions options) : base(options) {}
 
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderDetail> OrderDetails { get; set; }
-        public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<Stock> Stocks { get; set; }
-        public DbSet<Invoice> Invoices { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<Stock> Stocks { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().ToTable(nameof(Product));

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ namespace Nhathuoc.Models
             Stocks = new HashSet<Stock>();
         }
         public int ProductId { get; set; }
+
+        [Required]
         public string Name { get; set; }
         public int CategoryId { get; set; }
         public virtual Category? Category { get; set; }
@@ -21,7 +24,7 @@ namespace Nhathuoc.Models
         public string Unit { get; set; }
         public int QuantityInStock { get; set; }
         public string ExpiryDate { get; set; }
-        public string Mannufacurer { get; set; }
+        public string Manufacturer { get; set; }
         public long Created { get; set; }
         public long Updated { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }

@@ -1,0 +1,44 @@
+@model Nhathuoc.Models.Customer
+
+@{
+    ViewData["Title"] = "Create Customer";
+}
+
+<div class="container">
+    <h2>Tạo khách hàng</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label for="CustomerName">Tên khách hàng</label>
+            <input asp-for="CustomerName" class="form-control" />
+            <span asp-validation-for="CustomerName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="CustomerEmail">Email</label>
+            <input asp-for="CustomerEmail" class="form-control" />
+            <span asp-validation-for="CustomerEmail" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="CustomerPhone">Số điện thoại</label>
+            <input asp-for="CustomerPhone" class="form-control" />
+            <span asp-validation-for="CustomerPhone" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="CustomerAddress">Địa chỉ</label>
+            <input asp-for="CustomerAddress" class="form-control" />
+            <span asp-validation-for="CustomerAddress" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Dob">Ngày sinh</label>
+            <input asp-for="Dob" type="date" class="form-control" />
+            <span asp-validation-for="Dob" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Tạo</button>
+        <a asp-action="Index" class="btn btn-secondary">Huỷ</a>
+    </form>
+</div>
