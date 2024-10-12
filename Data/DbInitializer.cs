@@ -60,8 +60,8 @@ namespace Nhathuoc.Data
                 context.SaveChanges();
 
                 var customers = new Customer[] {
-                    new Customer { CustomerName = "Huy", CustomerPhone = "0983192540", CustomerAddress = "Duyên Hà, Thanh Trì, Hà Nội", Dob = DateTime.Parse("2001-10-20"), Created = unixTimestamp},
-                    new Customer { CustomerName = "Khánh", CustomerPhone = "0983192541", CustomerAddress = "Long Biên, Hà Nội", Dob = DateTime.Parse("2002-12-02"), Created = unixTimestamp}
+                    new Customer { CustomerName = "Huy", CustomerEmail= "huy@gmail.com", CustomerPhone = "0983192540", CustomerAddress = "Duyên Hà, Thanh Trì, Hà Nội", Dob = DateTime.Parse("2001-10-20"), Created = unixTimestamp},
+                    new Customer { CustomerName = "Khánh", CustomerEmail= "khanh@gmail.com", CustomerPhone = "0983192541", CustomerAddress = "Long Biên, Hà Nội", Dob = DateTime.Parse("2002-12-02"), Created = unixTimestamp}
                 };
                 foreach (var customer in customers)
                 {
@@ -83,7 +83,7 @@ namespace Nhathuoc.Data
                 var stocks = new Stock[] {
                     new Stock { Name = "Nhập lần 1",ProductId = 1, SupplierId = 1, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
                     new Stock { Name = "Nhập lần 2",ProductId = 2, SupplierId = 1, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
-                    new Stock { Name = "Nhập lần 3",ProductId = 3, SupplierId = 2, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
+                    new Stock { Name = "Nhập lần 3",ProductId = 3, SupplierId = 2, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp},
                     new Stock { Name = "Nhập lần 4",ProductId = 4, SupplierId = 3, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
                     new Stock { Name = "Nhập lần 5",ProductId = 5, SupplierId = 1, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },
                     new Stock { Name = "Nhập lần 6",ProductId = 6, SupplierId = 2, QuantityReceived = 1000, ReceivedDate = DateTime.Parse("2024-10-08"), Created = unixTimestamp },

@@ -12,15 +12,9 @@ using Nhathuoc.Models;
 
 namespace Nhathuoc.Controllers
 {
-    [Route("[controller]")]
+    [Route("Order")]
     public class OrderController : Controller
     {
-        private readonly ILogger<OrderController> _logger;
-
-        public OrderController(ILogger<OrderController> logger)
-        {
-            _logger = logger;
-        }
 
         private readonly PharmacyContext db;
 
@@ -31,6 +25,7 @@ namespace Nhathuoc.Controllers
 
         // GET: Order
         // GET: Order
+        [HttpGet("List")]
         public async Task<IActionResult> Index()
         {
             var orders = await db.Orders
@@ -43,6 +38,7 @@ namespace Nhathuoc.Controllers
 
 
         // GET: Order/Create
+        [HttpGet("Create")]
         public IActionResult Create()
         {
             ViewData["CustomerId"] = new SelectList(db.Customers, "CustomerId", "Name");
@@ -51,7 +47,7 @@ namespace Nhathuoc.Controllers
         }
 
         // POST: Order/Create
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("OrderId,CustomerId,OrderDate,TotalAmount,Status,Created,Updated,OrderDetail")] Order order)
         {
@@ -68,6 +64,7 @@ namespace Nhathuoc.Controllers
             return View(order);
         }
 
+        [HttpGet("Detail")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -91,7 +88,7 @@ namespace Nhathuoc.Controllers
 
         // GET: Order/Edit/5
         // POST: Order/UpdateStatus/5
-        [HttpPost]
+        [HttpPost("UpdateStatus")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateStatus(int id, string newStatus)
         {
@@ -113,10 +110,5 @@ namespace Nhathuoc.Controllers
             return db.Orders.Any(e => e.OrderId == id);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View("Error!");
-        }
     }
 }

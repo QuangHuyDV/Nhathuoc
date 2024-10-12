@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Supplier List";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 
 <div class="container">
@@ -27,7 +28,7 @@
                     <td>@item.Phone</td>
                     <td>@item.Address</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.SupplierId" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Edit" asp-route-id="@item.SupplierId" class="btn btn-sm btn-warning">Chỉnh sửa</a>
                     </td>
                 </tr>
             }

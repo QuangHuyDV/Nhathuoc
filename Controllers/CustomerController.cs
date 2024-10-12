@@ -11,16 +11,9 @@ using Nhathuoc.Models;
 
 namespace Nhathuoc.Controllers
 {
-    [Route("[controller]")]
+    [Route("Customer")]
     public class CustomerController : Controller
     {
-        private readonly ILogger<CustomerController> _logger;
-
-        public CustomerController(ILogger<CustomerController> logger)
-        {
-            _logger = logger;
-        }
-
         private readonly PharmacyContext db;
 
         public CustomerController(PharmacyContext context)
@@ -29,6 +22,7 @@ namespace Nhathuoc.Controllers
         }
 
         // GET: Customer
+        [HttpGet("List")]
         public async Task<IActionResult> Index()
         {
             var customers = await db.Customers.ToListAsync();
@@ -36,15 +30,16 @@ namespace Nhathuoc.Controllers
         }
 
         // GET: Customer/Create
+        [HttpGet("Create")]
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Customer/Create
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerId,Name,Email,PhoneNumber,Address,DateOfBirth")] Customer customer)
+        public async Task<IActionResult> Create([Bind("CustomerId,CustomerName,CustomerEmail,CustomerPhone,CustomerAddress,Dob")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -57,14 +52,15 @@ namespace Nhathuoc.Controllers
         }
 
         // GET: Customer/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        [HttpGet("Update")]
+        public async Task<IActionResult> Edit(int? mid)
         {
-            if (id == null)
+            if (mid == null)
             {
                 return NotFound();
             }
 
-            var customer = await db.Customers.FindAsync(id);
+            var customer = await db.Customers.FindAsync(mid);
             if (customer == null)
             {
                 return NotFound();
@@ -73,11 +69,11 @@ namespace Nhathuoc.Controllers
         }
 
         // POST: Customer/Edit/5
-        [HttpPost]
+        [HttpPost("Update")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Name,Email,PhoneNumber,Address,DateOfBirth")] Customer customer)
+        public async Task<IActionResult> Edit(int mid, [Bind("CustomerId,CustomerName,CustomerEmail,CustomerPhone,CustomerAddress,Dob")] Customer customer)
         {
-            if (id != customer.CustomerId)
+            if (mid != customer.CustomerId)
             {
                 return NotFound();
             }

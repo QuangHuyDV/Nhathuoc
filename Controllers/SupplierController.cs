@@ -11,15 +11,9 @@ using Nhathuoc.Models;
 
 namespace Nhathuoc.Controllers
 {
-    [Route("[controller]")]
+    [Route("Supplier")]
     public class SupplierController : Controller
     {
-        private readonly ILogger<SupplierController> _logger;
-
-        public SupplierController(ILogger<SupplierController> logger)
-        {
-            _logger = logger;
-        }
 
         private readonly PharmacyContext db;
 
@@ -29,6 +23,7 @@ namespace Nhathuoc.Controllers
         }
 
         // GET: Supplier
+        [HttpGet("List")]
         public async Task<IActionResult> Index()
         {
             var supplier = await db.Suppliers.ToListAsync();
@@ -36,13 +31,14 @@ namespace Nhathuoc.Controllers
         }
 
         // GET: Supplier/Create
+        [HttpGet("Create")]
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Supplier/Create
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SupplierId,SupplierName,Email,Phone,Address")] Supplier supplier)
         {
@@ -57,6 +53,7 @@ namespace Nhathuoc.Controllers
         }
 
         // GET: Supplier/Edit/5
+        [HttpGet("Update")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,7 +70,7 @@ namespace Nhathuoc.Controllers
         }
 
         // POST: Supplier/Edit/5
-        [HttpPost]
+        [HttpPost("Update")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("SupplierId,SupplierName,Email,Phone,Address")] Supplier supplier)
         {
@@ -104,35 +101,6 @@ namespace Nhathuoc.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(supplier);
-        }
-
-        // GET: Supplier/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var supplier = await db.Suppliers
-                .FirstOrDefaultAsync(m => m.SupplierId == id);
-            if (supplier == null)
-            {
-                return NotFound();
-            }
-
-            return View(supplier);
-        }
-
-        // POST: Supplier/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var supplier = await db.Suppliers.FindAsync(id);
-            db.Suppliers.Remove(supplier);
-            await db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool CustomerExists(int id)

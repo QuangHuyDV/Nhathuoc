@@ -12,15 +12,9 @@ using Nhathuoc.Models;
 
 namespace Nhathuoc.Controllers
 {
-    [Route("[controller]")]
+    [Route("Product")]
     public class ProductController : Controller
     {
-        private readonly ILogger<ProductController> _logger;
-
-        public ProductController(ILogger<ProductController> logger)
-        {
-            _logger = logger;
-        }
 
         private readonly PharmacyContext db;
 
@@ -30,6 +24,7 @@ namespace Nhathuoc.Controllers
         }
 
         // GET: Product
+        [HttpGet("List")]
         public async Task<IActionResult> Index()
         {
             var products = await db.Products.Include(p => p.Category).ToListAsync();
@@ -37,6 +32,7 @@ namespace Nhathuoc.Controllers
         }
 
         // GET: Product/Create
+        [HttpGet("Create")]
         public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(db.Categories, "CategoryId", "Name");
@@ -44,7 +40,7 @@ namespace Nhathuoc.Controllers
         }
 
         // POST: Product/Create
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProductId,Name,Manufacturer,Price,ExpiryDate,CategoryId")] Product product)
         {
@@ -60,6 +56,7 @@ namespace Nhathuoc.Controllers
         }
 
         // GET: Product/Edit/5
+        [HttpGet("Update")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,7 +74,7 @@ namespace Nhathuoc.Controllers
         }
 
         // POST: Product/Edit/5
-        [HttpPost]
+        [HttpPost("Update")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ProductId,Name,Manufacturer,Price,ExpiryDate,CategoryId")] Product product)
         {
@@ -111,35 +108,6 @@ namespace Nhathuoc.Controllers
             return View(product);
         }
 
-        // GET: Product/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await db.Products
-                .Include(p => p.Category)
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-
-        // POST: Product/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var product = await db.Products.FindAsync(id);
-            db.Products.Remove(product);
-            await db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
         private bool ProductExists(int id)
         {

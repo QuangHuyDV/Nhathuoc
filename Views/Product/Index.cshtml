@@ -2,36 +2,37 @@
 
 @{
     ViewData["Title"] = "Product List";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 
 <div class="container">
-    <h2>Product List</h2>
-    <a asp-action="Create" class="btn btn-primary mb-2">Create New Product</a>
+    <h2>Danh sách sản phẩm</h2>
+    <a asp-action="Create" class="btn btn-primary mb-2">Tạo sản phẩm mới</a>
 
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Product Name</th>
-                <th>Manufacturer</th>
-                <th>Price</th>
-                <th>Expiry Date</th>
-                <th>Category</th>
-                <th>Actions</th>
+                <th>Tên sản phẩm</th>
+                <th>Nhà sản xuất</th>
+                <th>Giá</th>
+                <th>Ngày hết hạn</th>
+                <th>Loại</th>
+                <th>Hành động</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@item.Manufacturer</td>
-                    <td>@item.Price</td>
-                    <td>@item.ExpiryDate.ToShortDateString()</td>
-                    <td>@item.Category.Name</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-warning">Edit</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Manufacturer</td>
+                        <td>@item.Price</td>
+                        <td>@item.ExpiryDate</td>
+                        <td>@item.Category.Name</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-warning">Chỉnh sửa</a>
+                        </td>
+                    </tr>
             }
         </tbody>
     </table>

@@ -12,16 +12,9 @@ using Nhathuoc.Models;
 
 namespace Nhathuoc.Controllers
 {
-    [Route("[controller]")]
+    [Route("Stock")]
     public class StockController : Controller
     {
-        private readonly ILogger<StockController> _logger;
-
-        public StockController(ILogger<StockController> logger)
-        {
-            _logger = logger;
-        }
-
         private readonly PharmacyContext db;
 
         public StockController(PharmacyContext context)
@@ -30,6 +23,7 @@ namespace Nhathuoc.Controllers
         }
 
         // GET: Stock
+        [HttpGet("List")]
         public async Task<IActionResult> Index()
         {
             var stocks = await db.Stocks.Include(s => s.Supplier).Include(p => p.Product).ToListAsync();
@@ -37,6 +31,7 @@ namespace Nhathuoc.Controllers
         }
 
         // GET: Stock/Create
+        [HttpGet("Create")]
         public IActionResult Create()
         {
             ViewData["SupplierId"] = new SelectList(db.Suppliers, "SupplierId", "Name");
@@ -45,7 +40,7 @@ namespace Nhathuoc.Controllers
         }
 
         // POST: Stock/Create
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StockId,ProductId,SupplierId,QuantityReceived,ReceivedDate")] Stock stock)
         {
@@ -62,6 +57,7 @@ namespace Nhathuoc.Controllers
         }
 
         // GET: Stock/Edit/5
+        [HttpGet("Update")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,7 +76,7 @@ namespace Nhathuoc.Controllers
         }
 
         // POST: Stock/Edit/5
-        [HttpPost]
+        [HttpPost("Update")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("StockId,ProductId,SupplierId,QuantityReceived,ReceivedDate")] Stock stock)
         {
@@ -113,36 +109,6 @@ namespace Nhathuoc.Controllers
             ViewData["SupplierId"] = new SelectList(db.Suppliers, "SupplierId", "Name", stock.SupplierId);
             ViewData["ProductId"] = new SelectList(db.Products, "ProductId", "Name", stock.ProductId);
             return View(stock);
-        }
-
-        // GET: Stock/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var stock = await db.Stocks
-                .Include(p => p.Supplier)
-                .FirstOrDefaultAsync(m => m.StockId == id);
-            if (stock == null)
-            {
-                return NotFound();
-            }
-
-            return View(stock);
-        }
-
-        // POST: Stock/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var stock = await db.Stocks.FindAsync(id);
-            db.Stocks.Remove(stock);
-            await db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool StockExists(int id)

@@ -2,11 +2,12 @@
 
 @{
     ViewData["Title"] = "Stock List";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 
 <div class="container">
-    <h2>Stock List</h2>
-    <a asp-action="Create" class="btn btn-primary mb-2">Create New Stock</a>
+    <h2>Danh sách nhập kho</h2>
+    <a asp-action="Create" class="btn btn-primary mb-2">Tạo phiếu nhập kho</a>
 
     <table class="table table-bordered table-striped">
         <thead>
@@ -22,16 +23,16 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@item.Product.Name</td>
-                    <td>@item.Supplier.SupplierName</td>
-                    <td>@item.ReceivedDate.ToShortDateString()</td>
-                    <td>@item.QuantityReceived</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-warning">Edit</a>
-                    </td>
-                </tr>
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Supplier.SupplierName</td>
+                            <td>@item.ReceivedDate.ToShortDateString()</td>
+                            <td>@item.QuantityReceived</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.StockId" class="btn btn-sm btn-warning">Chỉnh sửa</a>
+                            </td>
+                        </tr>
             }
         </tbody>
     </table>

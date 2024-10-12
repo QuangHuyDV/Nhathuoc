@@ -11,16 +11,9 @@ using Nhathuoc.Models;
 
 namespace Nhathuoc.Controllers
 {
-    [Route("[controller]")]
+    [Route("Category")]
     public class CategoryController : Controller
     {
-        private readonly ILogger<CategoryController> _logger;
-
-        public CategoryController(ILogger<CategoryController> logger)
-        {
-            _logger = logger;
-        }
-
         private PharmacyContext db;
 
         public CategoryController(PharmacyContext context)
@@ -34,15 +27,15 @@ namespace Nhathuoc.Controllers
         public IActionResult Index(int? mid, int currentPage)
         {
             IQueryable<Category> categorys = db.Categories;
-            if (mid != null)
-            {
-                categorys = db.Categories.Where(c => c.CategoryId == mid);
-            }
-            int totalItems = categorys.Count();
-            int pageNum = (int)Math.Ceiling(totalItems / (float)pageSize);
-            ViewBag.pageNum = pageNum;
-            var result = categorys.Skip((pageSize - 1) * pageSize).Take(pageSize).ToList();
-            return View(result);
+            // if (mid != null)
+            // {
+            //     categorys = db.Categories.Where(c => c.CategoryId == mid);
+            // }
+            // int totalItems = categorys.Count();
+            // int pageNum = (int)Math.Ceiling(totalItems / (float)pageSize);
+            // ViewBag.pageNum = pageNum;
+            // var result = categorys.Skip((pageSize - 1) * pageSize).Take(pageSize).ToList();
+            return View(categorys);
         }
 
         [HttpGet("Create")]

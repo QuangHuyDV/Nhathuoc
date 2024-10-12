@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create Product";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 
 <div class="container">
@@ -28,7 +29,7 @@
 
         <div class="form-group">
             <label for="ExpiryDate">Ngày hết hạn</label>
-            <input asp-for="ExpiryDate" type="date" class="form-control" />
+            <input asp-for="ExpiryDate" type="text" class="form-control" />
             <span asp-validation-for="ExpiryDate" class="text-danger"></span>
         </div>
 
@@ -38,7 +39,7 @@
             <span asp-validation-for="CategoryId" class="text-danger"></span>
         </div>
 
-        <button type="submit" class="btn btn-primary">Create</button>
-        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary">Tạo</button>
+        <a asp-action="Index" class="btn btn-secondary">Huỷ</a>
     </form>
 </div>
