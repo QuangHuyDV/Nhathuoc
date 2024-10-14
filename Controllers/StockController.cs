@@ -12,7 +12,7 @@ using Nhathuoc.Models;
 
 namespace Nhathuoc.Controllers
 {
-    [Route("Stock")]
+    [Route("[controller]")]
     public class StockController : Controller
     {
         private readonly PharmacyContext db;
@@ -22,12 +22,26 @@ namespace Nhathuoc.Controllers
             db = context;
         }
 
+        private int pageSize = 10;
+
         // GET: Stock
         [HttpGet("List")]
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int? mid, int page = 1)
         {
-            var stocks = await db.Stocks.Include(s => s.Supplier).Include(p => p.Product).ToListAsync();
-            return View(stocks);
+            var stocks = (IQueryable<Stock>)db.Stocks.Include(s => s.Supplier).Include(p => p.Product);
+            if (mid != null)
+            {
+                stocks = stocks.Where(p => p.StockId == mid).Include(s => s.Supplier).Include(p => p.Product);
+                ViewBag.mid = mid;
+            }
+
+            int totalItems = stocks.Count();
+            int totalPages = (int)Math.Ceiling(totalItems / (float)pageSize);
+            ViewBag.pageNum = totalPages;
+            ViewBag.currentPage = page;
+
+            var result = stocks.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return View(result);
         }
 
         // GET: Stock/Create

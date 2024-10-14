@@ -6,7 +6,7 @@
 }
 
 <div class="container">
-    <h2>Supplier List</h2>
+    <h2>Danh sách nhà cung cấp</h2>
     <a asp-action="Create" class="btn btn-primary mb-2">Tạo nhà cung cấp</a>
 
     <table class="table table-bordered table-striped">
@@ -16,7 +16,7 @@
                 <th>Email</th>
                 <th>Số điện thoại</th>
                 <th>Địa chỉ</th>
-                <th>Hành động</th>
+                <th>Thao tác</th>
             </tr>
         </thead>
         <tbody>
@@ -34,4 +34,12 @@
             }
         </tbody>
     </table>
+    <ul class="pagination">
+        @for (int i = 1; i <= ViewBag.pageNum; i++)
+        {
+            <li class="page-item @(ViewBag.currentPage == i ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-mid="@ViewBag.mid" asp-route-page="@i">@i</a>
+            </li>
+        }
+    </ul>
 </div>

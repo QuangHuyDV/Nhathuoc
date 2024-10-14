@@ -12,7 +12,7 @@ using Nhathuoc.Models;
 
 namespace Nhathuoc.Controllers
 {
-    [Route("Product")]
+    [Route("[controller]")]
     public class ProductController : Controller
     {
 
@@ -23,12 +23,26 @@ namespace Nhathuoc.Controllers
             db = context;
         }
 
+        private int pageSize = 10;
+
         // GET: Product
         [HttpGet("List")]
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int? mid, int page = 1)
         {
-            var products = await db.Products.Include(p => p.Category).ToListAsync();
-            return View(products);
+            var products = (IQueryable<Product>)db.Products.Include(p => p.Category);
+            if (mid != null)
+            {
+                products = products.Where(p => p.ProductId == mid).Include(p => p.Category);
+                ViewBag.mid = mid;
+            }
+
+            int totalItems = products.Count();
+            int totalPages = (int)Math.Ceiling(totalItems / (float)pageSize);
+            ViewBag.pageNum = totalPages;
+            ViewBag.currentPage = page;
+
+            var result = products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return View(result);
         }
 
         // GET: Product/Create

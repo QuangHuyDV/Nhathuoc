@@ -17,23 +17,31 @@
                 <th>Tên nhà cung cấp</th>
                 <th>Ngày nhập</th>
                 <th>Số lượng</th>
-                <th>Hành động</th>
+                @* <th>Thao tác</th> *@
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                        <tr>
-                            <td>@item.Name</td>
-                            <td>@item.Product.Name</td>
-                            <td>@item.Supplier.SupplierName</td>
-                            <td>@item.ReceivedDate.ToShortDateString()</td>
-                            <td>@item.QuantityReceived</td>
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@item.StockId" class="btn btn-sm btn-warning">Chỉnh sửa</a>
-                            </td>
-                        </tr>
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Supplier.SupplierName</td>
+                    <td>@item.ReceivedDate.ToShortDateString()</td>
+                    <td>@item.QuantityReceived</td>
+                    @* <td>
+                <a asp-action="Edit" asp-route-id="@item.StockId" class="btn btn-sm btn-warning">Chỉnh sửa</a>
+                </td> *@
+                </tr>
             }
         </tbody>
     </table>
+    <ul class="pagination">
+        @for (int i = 1; i <= ViewBag.pageNum; i++)
+        {
+            <li class="page-item @(ViewBag.currentPage == i ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-mid="@ViewBag.mid" asp-route-page="@i">@i</a>
+            </li>
+        }
+    </ul>
 </div>

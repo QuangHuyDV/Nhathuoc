@@ -8,7 +8,7 @@
 <div class="container">
     <h2>Chỉnh sửa sản phầm</h2>
 
-    <form asp-action="Edit" method="post" asp-route-id="@Model.ProductId">
+    <form asp-action="Edit" method="post" asp-controller="Product" asp-route-id="@Model.ProductId">
         <input type="hidden" asp-for="ProductId" />
 
         <div class="form-group">

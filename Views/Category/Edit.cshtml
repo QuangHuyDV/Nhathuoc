@@ -8,7 +8,7 @@
 <div class="container">
     <h2>Chỉnh sửa thể loại </h2>
 
-    <form asp-action="Edit" method="post"  asp-route-id="@Model.CategoryId">
+    <form asp-action="Update" asp-controller="Category" method="post"  asp-route-id="@Model.CategoryId">
         <input type="hidden" asp-for="CategoryId" />
 
         <div class="form-group">

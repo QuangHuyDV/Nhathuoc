@@ -12,7 +12,7 @@ using Nhathuoc.Models;
 
 namespace Nhathuoc.Controllers
 {
-    [Route("Order")]
+    [Route("[controller]")]
     public class OrderController : Controller
     {
 

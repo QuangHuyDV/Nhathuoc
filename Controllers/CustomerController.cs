@@ -11,7 +11,7 @@ using Nhathuoc.Models;
 
 namespace Nhathuoc.Controllers
 {
-    [Route("Customer")]
+    [Route("[controller]")]
     public class CustomerController : Controller
     {
         private readonly PharmacyContext db;
@@ -21,12 +21,26 @@ namespace Nhathuoc.Controllers
             db = context;
         }
 
+        private int pageSize = 10;
+
         // GET: Customer
         [HttpGet("List")]
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int? mid, int page = 1)
         {
-            var customers = await db.Customers.ToListAsync();
-            return View(customers);
+            IQueryable<Customer> cutomers = db.Customers;
+            if (mid != null)
+            {
+                cutomers = cutomers.Where(c => c.CustomerId == mid);
+                ViewBag.mid = mid;
+            }
+
+            int totalItems = cutomers.Count();
+            int totalPages = (int)Math.Ceiling(totalItems / (float)pageSize);
+            ViewBag.pageNum = totalPages;
+            ViewBag.currentPage = page;
+
+            var result = cutomers.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return View(result);
         }
 
         // GET: Customer/Create

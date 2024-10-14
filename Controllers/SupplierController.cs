@@ -11,7 +11,7 @@ using Nhathuoc.Models;
 
 namespace Nhathuoc.Controllers
 {
-    [Route("Supplier")]
+    [Route("[controller]")]
     public class SupplierController : Controller
     {
 
@@ -21,13 +21,26 @@ namespace Nhathuoc.Controllers
         {
             db = context;
         }
+        private int pageSize = 10;
 
         // GET: Supplier
         [HttpGet("List")]
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int? mid, int page = 1)
         {
-            var supplier = await db.Suppliers.ToListAsync();
-            return View(supplier);
+            var suppliers = (IQueryable<Supplier>)db.Suppliers;
+            if (mid != null)
+            {
+                suppliers = suppliers.Where(p => p.SupplierId == mid);
+                ViewBag.mid = mid;
+            }
+
+            int totalItems = suppliers.Count();
+            int totalPages = (int)Math.Ceiling(totalItems / (float)pageSize);
+            ViewBag.pageNum = totalPages;
+            ViewBag.currentPage = page;
+
+            var result = suppliers.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return View(result);
         }
 
         // GET: Supplier/Create

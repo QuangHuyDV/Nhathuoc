@@ -15,39 +15,47 @@
             <th>Ngày đăt đơn</th>
             <th>Tổng số lượng</th>
             <th>Trạng thái</th>
-            <th>Hành động</th>
+            <th>Thao tác</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var order in Model)
         {
-            <tr>
-                <td>@order.OrderId</td>
-                <td>@order.Customer?.CustomerName</td>
-                <td>@order.OrderDate.ToString("yyyy-MM-dd")</td>
-                <td>
+                <tr>
+                    <td>@order.OrderId</td>
+                    <td>@order.Customer?.CustomerName</td>
+                    <td>@order.OrderDate.ToString("yyyy-MM-dd")</td>
+                    <td>
                     @order.Status
-                    <form asp-action="UpdateStatus" method="post" style="display:inline;">
-                        <input type="hidden" name="id" value="@order.OrderId" />
-                        @order.Status
                         <form asp-action="UpdateStatus" method="post" style="display:inline;">
                             <input type="hidden" name="id" value="@order.OrderId" />
+                        @order.Status
+                            <form asp-action="UpdateStatus" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@order.OrderId" />
                             @* <select name="newStatus" class="form-control" style="display:inline; width:auto;">
-                                <option value="Pending" @(order.Status == "Pending" ? "selected" : "")>Pending</option>
-                                <option value="Completed" @(order.Status == "Completed" ? "selected" : "")>Completed
-                                </option>
-                                <option value="Cancelled" @(order.Status == "Cancelled" ? "selected" : "")>Cancelled
-                                </option>
-                            </select> *@
+                        <option value="Pending" @(order.Status == "Pending" ? "selected" : "")>Pending</option>
+                        <option value="Completed" @(order.Status == "Completed" ? "selected" : "")>Completed
+                        </option>
+                        <option value="Cancelled" @(order.Status == "Cancelled" ? "selected" : "")>Cancelled
+                        </option>
+                        </select> *@
+                                <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                            </form>
                             <button type="submit" class="btn btn-primary btn-sm">Update</button>
                         </form>
-                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
-                    </form>
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@order.OrderId" class="btn btn-info">Chi tiết</a>
-                </td>
-            </tr>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@order.OrderId" class="btn btn-info">Chi tiết</a>
+                    </td>
+                </tr>
         }
     </tbody>
 </table>
+<ul class="pagination">
+    @for (int i = 1; i <= ViewBag.pageNum; i++)
+    {
+                <li class="page-item @(ViewBag.currentPage == i ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-mid="@ViewBag.mid" asp-route-page="@i">@i</a>
+                </li>
+    }
+    </ul>
